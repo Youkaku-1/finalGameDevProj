@@ -6,13 +6,28 @@ public class MapLoop: MonoBehaviour
     public GameObject[] objectsToMove;
 
     [Header("Movement Settings")]
-    public float moveSpeed = 0f;       
-    public float resetPositionZ = 0f; 
-    public float endPositionZ = 0f;  
+    public float moveSpeed = 0f;
+    public float resetPositionZ = 0f;
+    public float endPositionZ = 0f;
+
+    [Header("Player Settings")]
+    public GameObject player; // Reference to the player GameObject
+
+    private bool isLoopActive = true;
+
+    void Start()
+    {
+        // If player reference is not set, try to find it automatically
+        if (player == null)
+        {
+            player = GameObject.FindGameObjectWithTag("Player");
+        }
+    }
 
     void Update()
     {
-        if (objectsToMove == null || objectsToMove.Length == 0)
+        // Only move objects if the loop is active
+        if (!isLoopActive || objectsToMove == null || objectsToMove.Length == 0)
             return;
 
         foreach (GameObject obj in objectsToMove)
@@ -29,6 +44,27 @@ public class MapLoop: MonoBehaviour
                 pos.z = resetPositionZ;
                 obj.transform.position = pos;
             }
+        }
+    }
+
+    // Method to stop the loop
+    public void StopLoop()
+    {
+        isLoopActive = false;
+    }
+
+    // Method to start/resume the loop
+    public void StartLoop()
+    {
+        isLoopActive = true;
+    }
+
+    // Optional: If you want to handle collision detection in this script
+    void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Obstacle"))
+        {
+            StopLoop();
         }
     }
 }

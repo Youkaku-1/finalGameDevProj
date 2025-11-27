@@ -11,8 +11,12 @@ public class PlayerMovement : MonoBehaviour
     public float leftBoundary = -10f;
     public float rightBoundary = 10f;
 
+    [Header("Jump Settings")]
+    public float jumpForce = 10f;
+
     private Vector3 targetPosition;
     private Vector3 velocity = Vector3.zero;
+    private Rigidbody rb;
     public Animator animator;
 
     void Start()
@@ -20,6 +24,12 @@ public class PlayerMovement : MonoBehaviour
         // Initialize target position to current position
         targetPosition = transform.position;
 
+        // Get Rigidbody component
+        rb = GetComponent<Rigidbody>();
+        if (rb == null)
+        {
+            Debug.LogError("No Rigidbody component found on the player! Jumping requires a Rigidbody.");
+        }
 
         // If no Animator is found, log a warning
         if (animator == null)
@@ -30,9 +40,16 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        // Smoothly move towards target position
-        transform.position = Vector3.SmoothDamp(transform.position, targetPosition, ref velocity, smoothTime);
+        // Smoothly move towards target position on X axis only
+        Vector3 smoothedPosition = Vector3.SmoothDamp(transform.position, targetPosition, ref velocity, smoothTime);
+
+        // Only apply smoothing to X position, keep Y and Z from physics
+        transform.position = new Vector3(smoothedPosition.x, transform.position.y, transform.position.z);
+
+
     }
+
+
 
     // Input System methods - these must have exactly this signature
     public void OnRight(InputValue value)
@@ -48,6 +65,14 @@ public class PlayerMovement : MonoBehaviour
         if (value.isPressed)
         {
             MoveLeft();
+        }
+    }
+
+    public void OnJump(InputValue value)
+    {
+        if (value.isPressed && animator != null && animator.GetBool("isGrounded"))
+        {
+            Jump();
         }
     }
 
@@ -88,7 +113,6 @@ public class PlayerMovement : MonoBehaviour
                 animator.SetTrigger("Left");
             }
 
-
             targetPosition.x = newX;
         }
         else
@@ -98,5 +122,18 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    void Jump()
+    {
+        // Apply jump force
+        if (rb != null)
+        {
+            rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+        }
 
+        // Trigger jump animation
+        if (animator != null)
+        {
+            animator.SetTrigger("Jump");
+        }
+    }
 }
