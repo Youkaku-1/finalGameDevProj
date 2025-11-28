@@ -12,14 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b7435b583d957114689a39e62c7a1f6f, type: 3}
   m_Name: ObstacleData
   m_EditorClassIdentifier: Assembly-CSharp::ObstacleData
-  obstaclePrefabs:
-  - {fileID: 473527410812904453, guid: f9ce9dd44d9f2804cb84c00a86bca6ec, type: 3}
-  - {fileID: 7488196567663554274, guid: b6804623c9f392e4dbc5661859d642ac, type: 3}
-  - {fileID: 3941678621249039054, guid: 1571dc2d39305014e8f15fba317e9571, type: 3}
-  - {fileID: 7088944666843858724, guid: ca6039d76c6f389429f7e93cdc915475, type: 3}
-  - {fileID: 3142442602845450085, guid: c22b065ec9a77e4419dbebc02c0445ff, type: 3}
-  - {fileID: 1809021256856143197, guid: 1119104526ed3374d9e828bf8b86355e, type: 3}
-  - {fileID: 1659386878089881805, guid: ba5642b03e2d8ac4f9f3bec0e84b7a56, type: 3}
-  initialSpeed: 30
-  speedIncreaseRate: 0.5
-  maxSpeed: 100
+  threeLaneObstacles: []
+  twoLaneObstacles: []
+  initialSpeed: 5
+  speedIncreaseRate: 0.1
+  maxSpeed: 15
+  emptyLaneChance: 0.3

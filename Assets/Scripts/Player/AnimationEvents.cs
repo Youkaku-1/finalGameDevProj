@@ -1,9 +1,11 @@
+using UnityEditorInternal;
 using UnityEngine;
 
 public class AnimationEvents : MonoBehaviour
 {
     [Header("Roll Manager Reference")]
     public RollManager rollManager;
+    public ObstacleManager obstacleManager;
 
 
     public Animator animator;
@@ -42,5 +44,16 @@ public class AnimationEvents : MonoBehaviour
             Debug.LogWarning("RollManager reference is missing!");
         }
     }
-
+    public void StopObstacleLoopAndMovement()
+    {
+        if (obstacleManager != null)
+        {
+            obstacleManager.StopObstacleLoopAndMovement();
+            Debug.Log("Obstacle loop and movement stopped via animation event");
+        }
+        else
+        {
+            Debug.LogWarning("ObstacleSpawner reference is null!");
+        }
+    }
 }

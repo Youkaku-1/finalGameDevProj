@@ -4,10 +4,15 @@ using UnityEngine;
 public class ObstacleData : ScriptableObject
 {
     [Header("Obstacle Prefabs")]
-    public GameObject[] obstaclePrefabs;
+    public GameObject[] threeLaneObstacles; // Obstacles that can fill all three lanes
+    public GameObject[] twoLaneObstacles;   // Obstacles that can only fill up to 2 lanes
 
     [Header("Speed Settings")]
     public float initialSpeed = 5f;
     public float speedIncreaseRate = 0.1f;
     public float maxSpeed = 15f;
+
+    [Header("Spawn Chance Settings")]
+    [Range(0f, 1f)]
+    public float emptyLaneChance = 0.3f; // Chance to spawn nothing in a lane
 }

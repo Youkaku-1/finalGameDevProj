@@ -12,13 +12,16 @@ public class ObstacleSpawner : MonoBehaviour
     public float minSpawnInterval = 1f;
     public float maxSpawnInterval = 3f;
 
-    [Header("Player Reference")]
-    public Animator playerAnimator; // Reference to player's animator
+    [Header("Lane Settings")]
+    public float laneOffset = 10f; // Distance between lanes
 
     [Header("Debug")]
     public float currentSpeed;
     public int activeObstaclesCount;
     public bool isMovementStopped = false;
+
+    [Header("Loop Control")]
+    public bool isLoopActive = true; // Public variable to control the spawning loop
 
     private List<GameObject> activeObstacles = new List<GameObject>();
     private float spawnTimer;
@@ -34,26 +37,15 @@ public class ObstacleSpawner : MonoBehaviour
             return;
         }
 
-        // Try to find player animator if not assigned
-        if (playerAnimator == null)
-        {
-            GameObject player = GameObject.FindGameObjectWithTag("Player");
-            if (player != null)
-            {
-                playerAnimator = player.GetComponent<Animator>();
-            }
-        }
-
         currentSpeed = obstacleData.initialSpeed;
         CalculateNextSpawnTime();
     }
 
     void Update()
     {
-        if (!isSpawningActive || obstacleData == null)
+        if (!isSpawningActive || obstacleData == null || !isLoopActive)
             return;
 
-        CheckForHitTrigger();
         HandleSpawning();
         HandleObstacleMovement();
 
@@ -66,57 +58,89 @@ public class ObstacleSpawner : MonoBehaviour
         UpdateDebugInfo();
     }
 
-    void CheckForHitTrigger()
-    {
-        if (playerAnimator != null)
-        {
-            // Check if "isHit" trigger is active
-            if (playerAnimator.GetBool("isHit") || IsTriggerActive("isHit"))
-            {
-                if (!isMovementStopped)
-                {
-                    StopMovement();
-                }
-            }
-            else
-            {
-                if (isMovementStopped)
-                {
-                    ResumeMovement();
-                }
-            }
-        }
-    }
-
-    // Helper method to check if a trigger is active
-    bool IsTriggerActive(string triggerName)
-    {
-        AnimatorControllerParameter[] parameters = playerAnimator.parameters;
-        foreach (AnimatorControllerParameter param in parameters)
-        {
-            if (param.name == triggerName && param.type == AnimatorControllerParameterType.Trigger)
-            {
-                return playerAnimator.GetCurrentAnimatorStateInfo(0).IsName(triggerName) ||
-                       playerAnimator.GetBool(triggerName);
-            }
-        }
-        return false;
-    }
-
     void HandleSpawning()
     {
-        // Don't spawn new obstacles if movement is stopped
-        if (isMovementStopped)
+        // Don't spawn new obstacles if movement is stopped or loop is inactive
+        if (isMovementStopped || !isLoopActive)
             return;
 
         spawnTimer += Time.deltaTime;
 
         if (spawnTimer >= nextSpawnTime)
         {
-            SpawnRandomObstacle();
+            SpawnObstaclePattern();
             spawnTimer = 0f;
             CalculateNextSpawnTime();
         }
+    }
+
+    void SpawnObstaclePattern()
+    {
+        // Define the three lane positions
+        Vector3[] lanePositions = {
+            new Vector3(-laneOffset, spawnPosition.y, spawnPosition.z), // Left lane
+            new Vector3(0f, spawnPosition.y, spawnPosition.z),          // Center lane
+            new Vector3(laneOffset, spawnPosition.y, spawnPosition.z)   // Right lane
+        };
+
+        // Decide which obstacle pool to use
+        GameObject[] selectedObstaclePool = SelectObstaclePool();
+
+        if (selectedObstaclePool == null || selectedObstaclePool.Length == 0)
+        {
+            Debug.LogWarning("No obstacle prefabs available to spawn!");
+            return;
+        }
+
+        // For two-lane obstacles, we need to ensure we don't spawn in all three lanes
+        bool isTwoLaneObstacle = selectedObstaclePool == obstacleData.twoLaneObstacles;
+        List<int> availableLanes = new List<int> { 0, 1, 2 }; // All lanes initially available
+
+        if (isTwoLaneObstacle)
+        {
+            // Remove one random lane for two-lane obstacles
+            int laneToRemove = Random.Range(0, availableLanes.Count);
+            availableLanes.RemoveAt(laneToRemove);
+        }
+
+        // Spawn obstacles in available lanes
+        foreach (int laneIndex in availableLanes)
+        {
+            // Check if we should spawn nothing in this lane
+            if (Random.value <= obstacleData.emptyLaneChance)
+                continue;
+
+            // Select random obstacle from the chosen pool
+            int randomIndex = Random.Range(0, selectedObstaclePool.Length);
+            GameObject selectedPrefab = selectedObstaclePool[randomIndex];
+
+            if (selectedPrefab != null)
+            {
+                GameObject newObstacle = Instantiate(selectedPrefab, lanePositions[laneIndex], Quaternion.identity);
+                activeObstacles.Add(newObstacle);
+            }
+        }
+    }
+
+    GameObject[] SelectObstaclePool()
+    {
+        // Randomly choose between three-lane and two-lane obstacles
+        bool useThreeLane = Random.Range(0, 2) == 0; // 50% chance for each
+
+        if (useThreeLane && obstacleData.threeLaneObstacles.Length > 0)
+        {
+            return obstacleData.threeLaneObstacles;
+        }
+        else if (obstacleData.twoLaneObstacles.Length > 0)
+        {
+            return obstacleData.twoLaneObstacles;
+        }
+        else if (obstacleData.threeLaneObstacles.Length > 0)
+        {
+            return obstacleData.threeLaneObstacles; // Fallback to three-lane obstacles
+        }
+
+        return null;
     }
 
     void HandleObstacleMovement()
@@ -132,8 +156,8 @@ public class ObstacleSpawner : MonoBehaviour
                 continue;
             }
 
-            // Only move obstacle if movement is not stopped
-            if (!isMovementStopped)
+            // Only move obstacle if movement is not stopped and loop is active
+            if (!isMovementStopped && isLoopActive)
             {
                 // Move obstacle toward -Z axis
                 obstacle.transform.Translate(0f, 0f, -currentSpeed * Time.deltaTime, Space.World);
@@ -148,25 +172,6 @@ public class ObstacleSpawner : MonoBehaviour
         }
     }
 
-    void SpawnRandomObstacle()
-    {
-        if (obstacleData.obstaclePrefabs == null || obstacleData.obstaclePrefabs.Length == 0)
-        {
-            Debug.LogWarning("No obstacle prefabs assigned in ObstacleData!");
-            return;
-        }
-
-        // Select random obstacle prefab
-        int randomIndex = Random.Range(0, obstacleData.obstaclePrefabs.Length);
-        GameObject selectedPrefab = obstacleData.obstaclePrefabs[randomIndex];
-
-        if (selectedPrefab != null)
-        {
-            GameObject newObstacle = Instantiate(selectedPrefab, spawnPosition, Quaternion.identity);
-            activeObstacles.Add(newObstacle);
-        }
-    }
-
     void CalculateNextSpawnTime()
     {
         nextSpawnTime = Random.Range(minSpawnInterval, maxSpawnInterval);
@@ -174,7 +179,7 @@ public class ObstacleSpawner : MonoBehaviour
 
     void IncreaseSpeedOverTime()
     {
-        if (currentSpeed < obstacleData.maxSpeed)
+        if (currentSpeed < obstacleData.maxSpeed && isLoopActive)
         {
             currentSpeed += obstacleData.speedIncreaseRate * Time.deltaTime;
             currentSpeed = Mathf.Min(currentSpeed, obstacleData.maxSpeed);
@@ -184,6 +189,17 @@ public class ObstacleSpawner : MonoBehaviour
     void UpdateDebugInfo()
     {
         activeObstaclesCount = activeObstacles.Count;
+    }
+
+    // Public methods to control the loop
+    public void StopLoop()
+    {
+        isLoopActive = false;
+    }
+
+    public void StartLoop()
+    {
+        isLoopActive = true;
     }
 
     // Method to stop all movement
