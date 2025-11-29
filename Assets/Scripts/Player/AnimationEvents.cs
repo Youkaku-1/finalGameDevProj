@@ -7,6 +7,7 @@ public class AnimationEvents : MonoBehaviour
     public RollManager rollManager;
     public ObstacleManager obstacleManager;
     public BgMovemntManager bgMovemntManager;
+    public ScoreManager scoreManager;
 
 
     public Animator animator;
@@ -51,6 +52,7 @@ public class AnimationEvents : MonoBehaviour
         {
             obstacleManager.StopObstacleLoopAndMovement();
             bgMovemntManager.StopMovement();
+            scoreManager.StopScoreIncrease();
             Debug.Log("Obstacle loop and movement stopped via animation event");
         }
         else

@@ -1,4 +1,5 @@
 using UnityEngine;
+using TMPro;
 
 public class Playercollision : MonoBehaviour
 {
@@ -7,6 +8,11 @@ public class Playercollision : MonoBehaviour
 
     [Header("Animator Reference")]
     public Animator playerAnimator;
+
+    [Header("Coin UI")]
+    public TextMeshProUGUI coinText;
+
+    private int coinCount = 0;
 
     void Start()
     {
@@ -27,6 +33,9 @@ public class Playercollision : MonoBehaviour
         {
             playerAnimator = GetComponentInChildren<Animator>();
         }
+
+        // Update coin UI on start
+        UpdateCoinUI();
     }
 
     void OnCollisionEnter(Collision collision)
@@ -42,6 +51,18 @@ public class Playercollision : MonoBehaviour
         if (other.CompareTag("Obstacle"))
         {
             HandleObstacleCollision();
+        }
+        else if (other.CompareTag("Coin"))
+        {
+            CollectCoin(other.gameObject, 1);
+        }
+        else if (other.CompareTag("Coin10"))
+        {
+            CollectCoin(other.gameObject, 10);
+        }
+        else if (other.CompareTag("Coin50"))
+        {
+            CollectCoin(other.gameObject, 50);
         }
     }
 
@@ -62,5 +83,51 @@ public class Playercollision : MonoBehaviour
         {
             Debug.LogWarning("Player Animator not found! Make sure to assign the Animator component.");
         }
+    }
+
+    void CollectCoin(GameObject coinObject, int value)
+    {
+        // Increase coin count
+        coinCount += value;
+
+        // Update UI
+        UpdateCoinUI();
+
+        // destroy the coin object
+        Destroy(coinObject);
+        
+    }
+
+    void UpdateCoinUI()
+    {
+        if (coinText != null)
+        {
+            coinText.text = coinCount.ToString();
+        }
+    }
+
+    // Public method to get current coin count
+    public int GetCoinCount()
+    {
+        return coinCount;
+    }
+
+    // Public method to spend coins
+    public bool SpendCoins(int amount)
+    {
+        if (coinCount >= amount)
+        {
+            coinCount -= amount;
+            UpdateCoinUI();
+            return true;
+        }
+        return false;
+    }
+
+    // Public method to reset coins
+    public void ResetCoins()
+    {
+        coinCount = 0;
+        UpdateCoinUI();
     }
 }

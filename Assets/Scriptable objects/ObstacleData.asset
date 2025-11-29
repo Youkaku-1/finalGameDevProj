@@ -31,6 +31,7 @@ MonoBehaviour:
   - {fileID: 461215174213694294, guid: 578df163d95deed4ba43253a1fd0643e, type: 3}
   twoLaneObstacles:
   - {fileID: 838080895729710413, guid: fb9e7a087dda98e469f8db54f6c8b698, type: 3}
+  coinPrefab: {fileID: 6818933998854548729, guid: 9297ed65108427243ab0d183175f7728, type: 3}
   initialSpeed: 30
   speedIncreaseRate: 0.5
   maxSpeed: 100

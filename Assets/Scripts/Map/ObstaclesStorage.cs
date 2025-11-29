@@ -7,6 +7,9 @@ public class ObstacleData : ScriptableObject
     public GameObject[] threeLaneObstacles; // Obstacles that can fill all three lanes
     public GameObject[] twoLaneObstacles;   // Obstacles that can only fill up to 2 lanes
 
+    [Header("Coin Prefab")]
+    public GameObject coinPrefab; // Coin prefab to spawn in empty lanes
+
     [Header("Speed Settings")]
     public float initialSpeed = 5f;
     public float speedIncreaseRate = 0.1f;

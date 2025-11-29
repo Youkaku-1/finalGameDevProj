@@ -103,7 +103,10 @@ public class ObstacleSpawner : MonoBehaviour
             availableLanes.RemoveAt(laneToRemove);
         }
 
-        // Spawn obstacles in available lanes
+        // Track which lanes will have obstacles
+        bool[] laneHasObstacle = new bool[3];
+
+        // First pass: Spawn obstacles in available lanes
         foreach (int laneIndex in availableLanes)
         {
             // Check if we should spawn nothing in this lane
@@ -118,6 +121,26 @@ public class ObstacleSpawner : MonoBehaviour
             {
                 GameObject newObstacle = Instantiate(selectedPrefab, lanePositions[laneIndex], Quaternion.identity);
                 activeObstacles.Add(newObstacle);
+                laneHasObstacle[laneIndex] = true;
+            }
+        }
+
+        // Second pass: Spawn coins in lanes without obstacles
+        for (int laneIndex = 0; laneIndex < 3; laneIndex++)
+        {
+            // Skip lanes that already have obstacles
+            if (laneHasObstacle[laneIndex])
+                continue;
+
+            // Skip lanes that are not available for two-lane obstacles
+            if (isTwoLaneObstacle && !availableLanes.Contains(laneIndex))
+                continue;
+
+            // Spawn coin in this empty lane
+            if (obstacleData.coinPrefab != null)
+            {
+                GameObject newCoin = Instantiate(obstacleData.coinPrefab, lanePositions[laneIndex], Quaternion.identity);
+                activeObstacles.Add(newCoin);
             }
         }
     }
