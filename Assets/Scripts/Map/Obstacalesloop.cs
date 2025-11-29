@@ -160,7 +160,7 @@ public class ObstacleSpawner : MonoBehaviour
             if (!isMovementStopped && isLoopActive)
             {
                 // Move obstacle toward -Z axis
-                obstacle.transform.Translate(0f, 0f, -currentSpeed * Time.deltaTime, Space.World);
+                obstacle.transform.Translate(0f, 0f, -currentSpeed * Time.deltaTime);
             }
 
             // Check if obstacle should be deleted (still check even when movement is stopped)
