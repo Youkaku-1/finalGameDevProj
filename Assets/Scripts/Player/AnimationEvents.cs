@@ -8,8 +8,7 @@ public class AnimationEvents : MonoBehaviour
     public ObstacleManager obstacleManager;
     public BgMovemntManager bgMovemntManager;
     public ScoreManager scoreManager;
-
-
+    public PlayerMovementToggle PlayerMovement;
     public Animator animator;
 
     public void Start()
@@ -46,18 +45,22 @@ public class AnimationEvents : MonoBehaviour
             Debug.LogWarning("RollManager reference is missing!");
         }
     }
-    public void StopObstacleLoopAndMovement()
+    public void DeathFunctions()
     {
         if (obstacleManager != null)
         {
             obstacleManager.StopObstacleLoopAndMovement();
             bgMovemntManager.StopMovement();
             scoreManager.StopScoreIncrease();
-            Debug.Log("Obstacle loop and movement stopped via animation event");
+            PlayerMovement.DisableMovement();  
+            Debug.Log("Death Functions Worked!!!");
         }
         else
         {
-            Debug.LogWarning("ObstacleSpawner reference is null!");
+            Debug.LogWarning("Some reference is null!");
         }
     }
+
+
+
 }

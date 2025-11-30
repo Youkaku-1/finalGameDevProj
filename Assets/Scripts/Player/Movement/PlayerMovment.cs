@@ -14,8 +14,12 @@ public class PlayerMovment: MonoBehaviour
     [Header("References")]
     public Animator animator;
 
+    [Header("Roll Manager")]
+    public RollManager RollManager;
+
     private Vector3 targetPosition;
     private Vector3 velocity = Vector3.zero;
+    
 
     void Start()
     {
@@ -46,6 +50,7 @@ public class PlayerMovment: MonoBehaviour
         if (value.isPressed)
         {
             MoveRight();
+            RollManager.EndRoll();  
         }
     }
 
@@ -54,6 +59,7 @@ public class PlayerMovment: MonoBehaviour
         if (value.isPressed)
         {
             MoveLeft();
+            RollManager.EndRoll();
         }
     }
 

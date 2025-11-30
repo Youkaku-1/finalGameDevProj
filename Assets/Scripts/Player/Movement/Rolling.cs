@@ -7,6 +7,13 @@ public class PlayerRoll : MonoBehaviour
     public Animator animator;
     public RollManager rollManager;
 
+    [Header("Roll Force Settings")]
+    [SerializeField] private float downwardForce = 10f;
+    [SerializeField] private ForceMode forceMode = ForceMode.Impulse;
+
+    [Header("Component References")]
+    [SerializeField] private Rigidbody rb;
+
     void Start()
     {
         // Find animator in children if not assigned
@@ -26,6 +33,16 @@ public class PlayerRoll : MonoBehaviour
             if (rollManager == null)
             {
                 Debug.LogError("No RollManager found in scene!");
+            }
+        }
+
+        // Find Rigidbody if not assigned
+        if (rb == null)
+        {
+            rb = GetComponent<Rigidbody>();
+            if (rb == null)
+            {
+                Debug.LogError("No Rigidbody component found!");
             }
         }
     }
@@ -52,7 +69,16 @@ public class PlayerRoll : MonoBehaviour
         {
             animator.SetTrigger("isRolling");
         }
+
+        // Apply downward force
+        ApplyDownwardForce();
     }
 
-
+    void ApplyDownwardForce()
+    {
+        if (rb != null)
+        {
+            rb.AddForce(Vector3.down * downwardForce, forceMode);
+        }
+    }
 }

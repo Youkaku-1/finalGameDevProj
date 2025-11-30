@@ -9,7 +9,11 @@ public class PlayerJump : MonoBehaviour
     [Header("References")]
     public Animator animator;
 
+    [Header("Roll Manager")]
+    public RollManager RollManager;
+
     private Rigidbody rb;
+    
 
     void Start()
     {
@@ -31,12 +35,14 @@ public class PlayerJump : MonoBehaviour
         }
     }
 
+
     // Input System method
     public void OnJump(InputValue value)
     {
         if (value.isPressed && animator != null && animator.GetBool("isGrounded"))
         {
             Jump();
+            RollManager.EndRoll();
         }
     }
 
@@ -48,10 +54,46 @@ public class PlayerJump : MonoBehaviour
             rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
         }
 
-        // Trigger jump animation
+        // Trigger jump animation and set grounded to false
         if (animator != null)
         {
             animator.SetTrigger("Jump");
+            animator.SetBool("isGrounded", false);
+        }
+    }
+
+    // Called when this object collides with another
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Ground"))
+        {
+            SetGrounded(true);
+        }
+    }
+
+    // Optional: Also handle staying on ground for better reliability
+    private void OnCollisionStay(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Ground"))
+        {
+            SetGrounded(true);
+        }
+    }
+
+    // Called when this object stops colliding with another
+    private void OnCollisionExit(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Ground"))
+        {
+            SetGrounded(false);
+        }
+    }
+
+    private void SetGrounded(bool grounded)
+    {
+        if (animator != null)
+        {
+            animator.SetBool("isGrounded", grounded);
         }
     }
 }
