@@ -4,8 +4,8 @@ using UnityEngine;
 public class ObstacleData : ScriptableObject
 {
     [Header("Obstacle Prefabs")]
-    public GameObject[] threeLaneObstacles; // Obstacles that can fill all three lanes
-    public GameObject[] twoLaneObstacles;   // Obstacles that can only fill up to 2 lanes
+    public GameObject[] threeLaneObstacles; 
+    public GameObject[] twoLaneObstacles;   
 
     [Header("Coin Prefab")]
     public GameObject coinPrefab; // Coin prefab to spawn in empty lanes

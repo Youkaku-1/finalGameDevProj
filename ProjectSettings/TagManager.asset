@@ -9,6 +9,7 @@ TagManager:
   - Coin10
   - Coin50
   - Ground
+  - Reset
   layers:
   - Default
   - TransparentFX
