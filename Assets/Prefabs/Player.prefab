@@ -1325,7 +1325,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerJump
   jumpForce: 500
-  animator: {fileID: 2441754338502594592}
+  animator: {fileID: 8294464679688492477}
   RollManager: {fileID: 0}
 --- !u!114 &5937317615399336952
 MonoBehaviour:
@@ -1343,7 +1343,7 @@ MonoBehaviour:
   smoothTime: 0.1
   leftBoundary: -10
   rightBoundary: 10
-  animator: {fileID: 2441754338502594592}
+  animator: {fileID: 8294464679688492477}
   RollManager: {fileID: 0}
 --- !u!114 &41764194258502113
 MonoBehaviour:
@@ -1357,7 +1357,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3b7b0293fe1a0042b036ea7eddcaafc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerRoll
-  animator: {fileID: 2441754338502594592}
+  animator: {fileID: 8294464679688492477}
   rollManager: {fileID: 0}
   downwardForce: 500
   forceMode: 1
@@ -1375,7 +1375,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Playercollision
   mapLoop: {fileID: 0}
-  playerAnimator: {fileID: 2441754338502594592}
+  playerAnimator: {fileID: 8294464679688492477}
   coinText: {fileID: 0}
 --- !u!1 &3822705124660334031
 GameObject:
@@ -1849,7 +1849,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2456731488147459022
 Transform:
   m_ObjectHideFlags: 0
@@ -4150,7 +4150,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 023da56f7584859459a7044040545d10, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2356703958391709736, guid: 023da56f7584859459a7044040545d10, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x

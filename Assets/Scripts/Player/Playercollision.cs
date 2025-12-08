@@ -3,6 +3,9 @@ using TMPro;
 
 public class Playercollision : MonoBehaviour
 {
+    [Header("Coin Data")]
+    public CoinData coinData; // Reference to your ScriptableObject
+
     [Header("Map Loop Reference")]
     public MapLoop mapLoop;
 
@@ -11,8 +14,6 @@ public class Playercollision : MonoBehaviour
 
     [Header("Coin UI")]
     public TextMeshProUGUI coinText;
-
-    private int coinCount = 0;
 
     void Start()
     {
@@ -87,37 +88,47 @@ public class Playercollision : MonoBehaviour
 
     void CollectCoin(GameObject coinObject, int value)
     {
-        // Increase coin count
-        coinCount += value;
+        // Increase coin count in ScriptableObject
+        if (coinData != null)
+        {
+            coinData.coinCount += value;
+        }
+        else
+        {
+            Debug.LogWarning("CoinData ScriptableObject is not assigned!");
+        }
 
         // Update UI
         UpdateCoinUI();
 
-        // destroy the coin object
+        // Destroy the coin object
         Destroy(coinObject);
-        
     }
 
     void UpdateCoinUI()
     {
-        if (coinText != null)
+        if (coinText != null && coinData != null)
         {
-            coinText.text = coinCount.ToString();
+            coinText.text = coinData.coinCount.ToString();
         }
     }
 
     // Public method to get current coin count
     public int GetCoinCount()
     {
-        return coinCount;
+        if (coinData != null)
+        {
+            return coinData.coinCount;
+        }
+        return 0;
     }
 
     // Public method to spend coins
     public bool SpendCoins(int amount)
     {
-        if (coinCount >= amount)
+        if (coinData != null && coinData.coinCount >= amount)
         {
-            coinCount -= amount;
+            coinData.coinCount -= amount;
             UpdateCoinUI();
             return true;
         }
@@ -127,7 +138,10 @@ public class Playercollision : MonoBehaviour
     // Public method to reset coins
     public void ResetCoins()
     {
-        coinCount = 0;
-        UpdateCoinUI();
+        if (coinData != null)
+        {
+            coinData.coinCount = 0;
+            UpdateCoinUI();
+        }
     }
 }
