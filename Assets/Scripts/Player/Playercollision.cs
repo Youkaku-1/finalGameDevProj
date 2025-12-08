@@ -15,6 +15,9 @@ public class Playercollision : MonoBehaviour
     [Header("Coin UI")]
     public TextMeshProUGUI coinText;
 
+    // Local coin variable
+    private int coin = 0;
+
     void Start()
     {
         // If mapLoop reference is not set, try to find it automatically
@@ -34,6 +37,7 @@ public class Playercollision : MonoBehaviour
         {
             playerAnimator = GetComponentInChildren<Animator>();
         }
+
 
         // Update coin UI on start
         UpdateCoinUI();
@@ -88,7 +92,10 @@ public class Playercollision : MonoBehaviour
 
     void CollectCoin(GameObject coinObject, int value)
     {
-        // Increase coin count in ScriptableObject
+        // Update local coin variable
+        coin += value;
+
+        // Update ScriptableObject to keep it in sync
         if (coinData != null)
         {
             coinData.coinCount += value;
@@ -98,7 +105,7 @@ public class Playercollision : MonoBehaviour
             Debug.LogWarning("CoinData ScriptableObject is not assigned!");
         }
 
-        // Update UI
+        // Update UI using local variable
         UpdateCoinUI();
 
         // Destroy the coin object
@@ -107,28 +114,32 @@ public class Playercollision : MonoBehaviour
 
     void UpdateCoinUI()
     {
-        if (coinText != null && coinData != null)
+        if (coinText != null)
         {
-            coinText.text = coinData.coinCount.ToString();
+            // Use the local coin variable
+            coinText.text = coin.ToString();
         }
     }
 
     // Public method to get current coin count
     public int GetCoinCount()
     {
-        if (coinData != null)
-        {
-            return coinData.coinCount;
-        }
-        return 0;
+        return coin;
     }
 
     // Public method to spend coins
     public bool SpendCoins(int amount)
     {
-        if (coinData != null && coinData.coinCount >= amount)
+        if (coin >= amount)
         {
-            coinData.coinCount -= amount;
+            coin -= amount;
+
+            // Update ScriptableObject
+            if (coinData != null)
+            {
+                coinData.coinCount = coin;
+            }
+
             UpdateCoinUI();
             return true;
         }
@@ -138,10 +149,14 @@ public class Playercollision : MonoBehaviour
     // Public method to reset coins
     public void ResetCoins()
     {
+        coin = 0;
+
+        // Update ScriptableObject
         if (coinData != null)
         {
-            coinData.coinCount = 0;
-            UpdateCoinUI();
+            coinData.coinCount = coin;
         }
+
+        UpdateCoinUI();
     }
 }

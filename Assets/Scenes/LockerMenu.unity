@@ -131,6 +131,7 @@ GameObject:
   - component: {fileID: 119349898}
   - component: {fileID: 119349897}
   - component: {fileID: 119349896}
+  - component: {fileID: 119349899}
   m_Layer: 5
   m_Name: PlayerButton
   m_TagString: Untagged
@@ -240,6 +241,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 119349894}
   m_CullTransparentMesh: 1
+--- !u!114 &119349899
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 119349894}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3dc9614918d4885429940abf1bff8fa6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SkinButtonAssigner
+  skinStorage: {fileID: 11400000, guid: ee3ea23780a0fca44a7183666ce47c7f, type: 2}
+  skinToAssign: {fileID: 1399192725}
+  assignButton: {fileID: 119349896}
 --- !u!1 &258367251
 GameObject:
   m_ObjectHideFlags: 0
@@ -462,6 +478,7 @@ GameObject:
   - component: {fileID: 314554699}
   - component: {fileID: 314554702}
   - component: {fileID: 314554701}
+  - component: {fileID: 314554703}
   - component: {fileID: 314554700}
   m_Layer: 5
   m_Name: DemButton
@@ -572,6 +589,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 314554698}
   m_CullTransparentMesh: 1
+--- !u!114 &314554703
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 314554698}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3dc9614918d4885429940abf1bff8fa6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SkinButtonAssigner
+  skinStorage: {fileID: 11400000, guid: ee3ea23780a0fca44a7183666ce47c7f, type: 2}
+  skinToAssign: {fileID: 0}
+  assignButton: {fileID: 314554700}
 --- !u!1 &371242194
 GameObject:
   m_ObjectHideFlags: 0
@@ -1391,6 +1423,7 @@ GameObject:
   - component: {fileID: 1302214877}
   - component: {fileID: 1302214880}
   - component: {fileID: 1302214879}
+  - component: {fileID: 1302214881}
   - component: {fileID: 1302214878}
   m_Layer: 5
   m_Name: VecButton
@@ -1501,6 +1534,26 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1302214876}
   m_CullTransparentMesh: 1
+--- !u!114 &1302214881
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1302214876}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3dc9614918d4885429940abf1bff8fa6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SkinButtonAssigner
+  skinStorage: {fileID: 11400000, guid: ee3ea23780a0fca44a7183666ce47c7f, type: 2}
+  skinToAssign: {fileID: 0}
+  assignButton: {fileID: 1302214878}
+--- !u!1 &1399192725 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 186092939a34470469fc1ec6a32dd21f, type: 3}
+  m_PrefabInstance: {fileID: 1611938458}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1408266216
 GameObject:
   m_ObjectHideFlags: 0
@@ -1920,6 +1973,63 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1563685078}
   m_CullTransparentMesh: 1
+--- !u!1001 &1611938458
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: 186092939a34470469fc1ec6a32dd21f, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 186092939a34470469fc1ec6a32dd21f, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 186092939a34470469fc1ec6a32dd21f, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 186092939a34470469fc1ec6a32dd21f, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 186092939a34470469fc1ec6a32dd21f, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 186092939a34470469fc1ec6a32dd21f, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 186092939a34470469fc1ec6a32dd21f, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 186092939a34470469fc1ec6a32dd21f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 186092939a34470469fc1ec6a32dd21f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 186092939a34470469fc1ec6a32dd21f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 186092939a34470469fc1ec6a32dd21f, type: 3}
+      propertyPath: m_Name
+      value: Player
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 186092939a34470469fc1ec6a32dd21f, type: 3}
 --- !u!1 &1646204934
 GameObject:
   m_ObjectHideFlags: 0
@@ -2493,6 +2603,7 @@ GameObject:
   - component: {fileID: 2122620422}
   - component: {fileID: 2122620425}
   - component: {fileID: 2122620424}
+  - component: {fileID: 2122620426}
   - component: {fileID: 2122620423}
   m_Layer: 5
   m_Name: Player2Button
@@ -2603,6 +2714,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2122620421}
   m_CullTransparentMesh: 1
+--- !u!114 &2122620426
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2122620421}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3dc9614918d4885429940abf1bff8fa6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SkinButtonAssigner
+  skinStorage: {fileID: 11400000, guid: ee3ea23780a0fca44a7183666ce47c7f, type: 2}
+  skinToAssign: {fileID: 0}
+  assignButton: {fileID: 2122620423}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -2611,3 +2737,4 @@ SceneRoots:
   - {fileID: 1467277311}
   - {fileID: 864992414}
   - {fileID: 589695567}
+  - {fileID: 1611938458}
