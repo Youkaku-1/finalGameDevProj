@@ -10,6 +10,8 @@ public class AnimationEvents : MonoBehaviour
     public ScoreManager scoreManager;
     public PlayerMovementToggle PlayerMovement;
     public Animator animator;
+    public GameObject deathUI;
+
 
     public void Start()
     {
@@ -52,7 +54,8 @@ public class AnimationEvents : MonoBehaviour
             obstacleManager.StopObstacleLoopAndMovement();
             bgMovemntManager.StopMovement();
             scoreManager.StopScoreIncrease();
-            PlayerMovement.DisableMovement();  
+            PlayerMovement.DisableMovement();
+            deathUI.SetActive(true);
             Debug.Log("Death Functions Worked!!!");
         }
         else

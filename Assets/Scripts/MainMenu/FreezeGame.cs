@@ -1,8 +1,11 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
-public class PauseManager : MonoBehaviour
+public class Pause: MonoBehaviour
 {
     public static bool IsPaused { get; private set; }
+
+    public GameObject PauseMenu;
 
     private void Awake()
     {
@@ -40,5 +43,7 @@ public class PauseManager : MonoBehaviour
         else
             PauseGame();
     }
+
+
 }
 
