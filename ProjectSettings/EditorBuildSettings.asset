@@ -11,6 +11,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/mainGameScene.unity
     guid: b4fd9d3689c4b174e95d18b6dfd60e13
+  - enabled: 1
+    path: Assets/Scenes/LockerMenu.unity
+    guid: 76ac5b9dc2e6c5b4bb5b97fc960bf496
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_UseUCBPForAssetBundles: 0

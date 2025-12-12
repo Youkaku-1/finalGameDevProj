@@ -10,7 +10,7 @@ public class Playercollision : MonoBehaviour
     public MapLoop mapLoop;
 
     [Header("Animator Reference")]
-    public Animator playerAnimator;
+    public Animator animator;
 
     [Header("Coin UI")]
     public TextMeshProUGUI coinText;
@@ -27,15 +27,15 @@ public class Playercollision : MonoBehaviour
         }
 
         // If animator reference is not set, try to get it from this GameObject
-        if (playerAnimator == null)
+        if (animator == null)
         {
-            playerAnimator = GetComponent<Animator>();
+            animator = GetComponent<Animator>();
         }
 
         // If still not found, try to find it in children
-        if (playerAnimator == null)
+        if (animator == null)
         {
-            playerAnimator = GetComponentInChildren<Animator>();
+            animator = GetComponentInChildren<Animator>();
         }
 
 
@@ -80,9 +80,9 @@ public class Playercollision : MonoBehaviour
         }
 
         // Trigger the hit animation
-        if (playerAnimator != null)
+        if (animator != null)
         {
-            playerAnimator.SetTrigger("isHit");
+            animator.SetTrigger("isHit");
         }
         else
         {
