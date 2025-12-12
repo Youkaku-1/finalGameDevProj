@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8751f3daa0b1cd4fbeb2579db7edffd, type: 3}
   m_Name: SkinSorage
   m_EditorClassIdentifier: Assembly-CSharp::SkinData
-  skinIndex: 2
+  skinIndex: 0
   skinName: Default Skin
   unlocked: 1

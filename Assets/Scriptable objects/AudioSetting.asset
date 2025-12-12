@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32e90b3956523f74abc86280d6ea5608, type: 3}
   m_Name: AudioSetting
   m_EditorClassIdentifier: Assembly-CSharp::AudioSetting
-  volume: 0.026820643
+  volume: 0.05617848

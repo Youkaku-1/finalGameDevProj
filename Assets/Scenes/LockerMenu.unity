@@ -3682,8 +3682,9 @@ GameObject:
   - component: {fileID: 1974265501}
   - component: {fileID: 1974265503}
   - component: {fileID: 1974265502}
+  - component: {fileID: 1974265504}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: CoinDisplay
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3728,7 +3729,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: New Text
+  m_text: 0
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 0a082a9380698d941b7a3a6dda1f37f5, type: 2}
   m_sharedMaterial: {fileID: 6600543714202534946, guid: 0a082a9380698d941b7a3a6dda1f37f5, type: 2}
@@ -3755,8 +3756,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
-  m_fontSizeBase: 36
+  m_fontSize: 50
+  m_fontSizeBase: 50
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -3807,6 +3808,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1974265500}
   m_CullTransparentMesh: 1
+--- !u!114 &1974265504
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1974265500}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0270e86263ab7904299d6cafaf6dc3da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CoinDisplay
+  coinData: {fileID: 11400000, guid: db393b1e5d8c0ec40a9bac6da8701aa1, type: 2}
+  coinText: {fileID: 1974265502}
+  prefix: 'Coins: '
 --- !u!1 &2014137658
 GameObject:
   m_ObjectHideFlags: 0
