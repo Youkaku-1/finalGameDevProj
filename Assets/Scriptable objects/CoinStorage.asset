@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d87fddcf8c38d14683059cd18f70f1d, type: 3}
   m_Name: CoinStorage
   m_EditorClassIdentifier: Assembly-CSharp::CoinData
-  coinCount: 84412
+  coinCount: 0
