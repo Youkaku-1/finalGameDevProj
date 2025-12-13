@@ -15,6 +15,13 @@ public class Playercollision : MonoBehaviour
     [Header("Coin UI")]
     public TextMeshProUGUI coinText;
 
+    [Header("Audio Settings")]
+    public AudioSource audioSource;
+    public AudioClip coinSound;        // Sound for regular coin
+    public AudioClip coin10Sound;      // Sound for 10-coin
+    public AudioClip coin50Sound;      // Sound for 50-coin
+    public AudioClip obstacleSound;    // Optional: Sound for obstacle collision
+
     // Local coin variable
     private int coin = 0;
 
@@ -38,6 +45,23 @@ public class Playercollision : MonoBehaviour
             animator = GetComponentInChildren<Animator>();
         }
 
+        // If audio source is not set, try to get it from this GameObject
+        if (audioSource == null)
+        {
+            audioSource = GetComponent<AudioSource>();
+        }
+
+        // If still not found, try to find it in children or add a new one
+        if (audioSource == null)
+        {
+            audioSource = GetComponentInChildren<AudioSource>();
+            if (audioSource == null)
+            {
+                audioSource = gameObject.AddComponent<AudioSource>();
+                audioSource.spatialBlend = 0.5f; // Makes it somewhat 3D
+                audioSource.playOnAwake = false;
+            }
+        }
 
         // Update coin UI on start
         UpdateCoinUI();
@@ -59,20 +83,26 @@ public class Playercollision : MonoBehaviour
         }
         else if (other.CompareTag("Coin"))
         {
-            CollectCoin(other.gameObject, 1);
+            CollectCoin(other.gameObject, 1, coinSound);
         }
         else if (other.CompareTag("Coin10"))
         {
-            CollectCoin(other.gameObject, 10);
+            CollectCoin(other.gameObject, 10, coin10Sound);
         }
         else if (other.CompareTag("Coin50"))
         {
-            CollectCoin(other.gameObject, 50);
+            CollectCoin(other.gameObject, 50, coin50Sound);
         }
     }
 
     void HandleObstacleCollision()
     {
+        // Play obstacle sound if available
+        if (obstacleSound != null && audioSource != null)
+        {
+            audioSource.PlayOneShot(obstacleSound);
+        }
+
         // Stop the map loop when player collides with obstacle
         if (mapLoop != null)
         {
@@ -90,8 +120,30 @@ public class Playercollision : MonoBehaviour
         }
     }
 
-    void CollectCoin(GameObject coinObject, int value)
+    void CollectCoin(GameObject coinObject, int value, AudioClip sound)
     {
+        // Play coin collection sound
+        if (sound != null && audioSource != null)
+        {
+            audioSource.PlayOneShot(sound);
+        }
+        else if (audioSource != null)
+        {
+            // Fallback to default coin sound if specific sound is not set
+            if (coinSound != null)
+            {
+                audioSource.PlayOneShot(coinSound);
+            }
+            else
+            {
+                Debug.LogWarning("No coin sound assigned!");
+            }
+        }
+        else
+        {
+            Debug.LogWarning("AudioSource not found or assigned!");
+        }
+
         // Update local coin variable
         coin += value;
 
@@ -127,25 +179,6 @@ public class Playercollision : MonoBehaviour
         return coin;
     }
 
-    // Public method to spend coins
-    public bool SpendCoins(int amount)
-    {
-        if (coin >= amount)
-        {
-            coin -= amount;
-
-            // Update ScriptableObject
-            if (coinData != null)
-            {
-                coinData.coinCount = coin;
-            }
-
-            UpdateCoinUI();
-            return true;
-        }
-        return false;
-    }
-
     // Public method to reset coins
     public void ResetCoins()
     {
@@ -158,5 +191,14 @@ public class Playercollision : MonoBehaviour
         }
 
         UpdateCoinUI();
+    }
+
+    // Public method to play a sound (useful for other scripts)
+    public void PlaySound(AudioClip clip)
+    {
+        if (audioSource != null && clip != null)
+        {
+            audioSource.PlayOneShot(clip);
+        }
     }
 }

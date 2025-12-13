@@ -8,7 +8,7 @@ public class PauseManager : MonoBehaviour
 
     public PlayerInput playerInput;
 
-    public void OnHello(InputValue value)
+    public void OnPause(InputValue value)
     {
         Debug.Log("OnPause called!");
         if (value.isPressed)
