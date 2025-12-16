@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32e90b3956523f74abc86280d6ea5608, type: 3}
   m_Name: SFXSetting
   m_EditorClassIdentifier: Assembly-CSharp::AudioSetting
-  volume: 0.02377866
+  volume: 0.42906892
